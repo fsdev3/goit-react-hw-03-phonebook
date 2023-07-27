@@ -7,7 +7,12 @@ import { Container } from './App.styled';
 
 export class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     filter: '',
   };
 
@@ -15,9 +20,15 @@ export class App extends Component {
 
   componentDidMount() {
     const savedContactsData = localStorage.getItem(this.savedData);
-    this.setState({
-      contacts: savedContactsData ? JSON.parse(savedContactsData) : [],
-    });
+    if (savedContactsData) {
+      this.setState({ contacts: JSON.parse(savedContactsData) });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
   }
 
   inputChangeValue = e => {
@@ -27,8 +38,6 @@ export class App extends Component {
   };
 
   submitHandler = user => {
-    console.log('app', this.state);
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     return this.setState(prevValue => ({
       contacts: [...prevValue.contacts, { id: nanoid(), ...user }],
     }));
@@ -56,8 +65,6 @@ export class App extends Component {
   };
 
   deleteItem = contactId => {
-    // localStorage.setItem(user.name, user.number);
-
     this.setState(prevValue => ({
       contacts: prevValue.contacts.filter(item => item.id !== contactId),
     }));

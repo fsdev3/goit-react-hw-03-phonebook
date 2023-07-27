@@ -8,20 +8,6 @@ export class ContactForm extends Component {
     number: '',
   };
 
-  // componentDidMount  - local storage m3 l1 1:09
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     localStorage.setItem();
-  //   }
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.length !== this.state.length) {
-  //     return console.log('different');
-  //   }
-  //   return console.log('same');
-  // }
-
   inputChangeValue = e => {
     const newUsername = e.target.value;
     const key = e.target.name;
@@ -30,8 +16,6 @@ export class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log('cntForm', this.state);
-    // localStorage.setItem(key, JSON.stringify(e.target.number.value));
     if (this.props.onSubmitHandler(this.state)) {
       this.setState({ name: '', number: '' });
     }
