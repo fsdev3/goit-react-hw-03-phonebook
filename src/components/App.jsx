@@ -56,9 +56,11 @@ export class App extends Component {
       contact => contact.name === user.name
     );
     if (!searchUser) {
-      return this.submitHandler(user);
+      this.submitHandler(user);
+      return true;
     } else {
-      return alert(`${user.name} is already in contacts`);
+      alert(`${user.name} is already in contacts`);
+      return false;
     }
   };
 
